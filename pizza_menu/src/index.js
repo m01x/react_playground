@@ -69,15 +69,25 @@ const Header = () => {
 };
 
 const Menu = () => {
+  const pizzas = pizzaData;
+  const anyPizza = pizzas.length;
   return (
     <main className="menu">
       <h2>Nuestro menú 🎴</h2>
+
       {/*Recorremos el arreglo pizzaData usando map() para mostrarlo de forma dinamica*/}
-      <ul className="pizzas">
-        {pizzaData.map((pizza) => (
-          <Pizza pizzaObjeto={pizza} key={pizza.name} />
-        ))}
-      </ul>
+      {anyPizza > 0 ? (
+        <ul className="pizzas">
+          {pizzas.map((pizza) => (
+            <Pizza pizzaObjeto={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      ) : (
+        <p>
+          Estamos trabajando en nuestro menú, por favor regrese en los
+          horarios.😥
+        </p>
+      )}
 
       {/* <Pizza
         name="Pizza Funghi"
@@ -112,7 +122,7 @@ function Pizza(props) {
 const Footer = () => {
   const hour = new Date().getHours();
   const openHour = 12;
-  const closeHour = 21;
+  const closeHour = 22;
   const isOpen = hour >= openHour && hour <= closeHour;
   console.log(isOpen);
 
@@ -121,7 +131,19 @@ const Footer = () => {
   // else alert("Cerrado: No estamos atendiendo.");
   return (
     <footer className="footer">
-      {new Date().toLocaleTimeString()} - Estamos atendiendo 🍕
+      {isOpen ? (
+        <div className="order">
+          <p>Estamos atendiendo hasta las {closeHour}:00 hrs!.</p>
+          <button className="btn">Ordenar!</button>
+        </div>
+      ) : (
+        <div className="order">
+          <p>
+            Estaremos encantados de atenderle entre las {openHour}:00 y las{" "}
+            {closeHour}:00
+          </p>
+        </div>
+      )}
     </footer>
   );
 };
