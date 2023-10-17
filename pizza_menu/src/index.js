@@ -77,11 +77,18 @@ const Menu = () => {
 
       {/*Recorremos el arreglo pizzaData usando map() para mostrarlo de forma dinamica*/}
       {anyPizza > 0 ? (
-        <ul className="pizzas">
-          {pizzas.map((pizza) => (
-            <Pizza pizzaObjeto={pizza} key={pizza.name} />
-          ))}
-        </ul>
+        <>
+          {/**Esto es un Fragmento Reacto, lo estoy usando para devolver 2 root elements (<P> y <ul>) en el componente Menu */}
+          <p>
+            Autentica cocina Italiana. 6 recetas creativas para escoger. Todas
+            de nuestro horno de piedra, todo organico, todo delicioso.
+          </p>
+          <ul className="pizzas">
+            {pizzas.map((pizza) => (
+              <Pizza pizzaObjeto={pizza} key={pizza.name} />
+            ))}
+          </ul>
+        </>
       ) : (
         <p>
           Estamos trabajando en nuestro menú, por favor regrese en los
@@ -106,15 +113,21 @@ const Menu = () => {
   );
 };
 
-function Pizza(props) {
-  console.log(props);
+function Pizza({ pizzaObjeto }) {
+  //if (pizzaObjeto.soldOut) return null;
   return (
-    <li className="pizza">
-      <img src={props.pizzaObjeto.photoName} alt={props.pizzaObjeto.name}></img>
+    <li className={`pizza ${pizzaObjeto.soldOut ? "sold-out" : ""}`}>
+      {/**Para definir esta condicion ternaria, estamos utilizando Template literals con las ``*/}
+      <img src={pizzaObjeto.photoName} alt={pizzaObjeto.name}></img>
       <div>
-        <h3>{props.pizzaObjeto.name}</h3>
-        <p>{props.pizzaObjeto.ingredients}</p>
-        <span>{props.pizzaObjeto.price}</span>
+        <h3>{pizzaObjeto.name}</h3>
+        <p>{pizzaObjeto.ingredients}</p>
+        {/* {pizzaObjeto.soldOut ? (
+          <span>"AGOTADO!"</span>
+        ) : (
+          <span>pizzaObjeto.price</span>
+        )} */}
+        <span>{pizzaObjeto.soldOut ? "AGOTADO!" : pizzaObjeto.price}</span>
       </div>
     </li>
   );
@@ -122,7 +135,7 @@ function Pizza(props) {
 const Footer = () => {
   const hour = new Date().getHours();
   const openHour = 12;
-  const closeHour = 22;
+  const closeHour = 23;
   const isOpen = hour >= openHour && hour <= closeHour;
   console.log(isOpen);
 
@@ -132,10 +145,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       {isOpen ? (
-        <div className="order">
-          <p>Estamos atendiendo hasta las {closeHour}:00 hrs!.</p>
-          <button className="btn">Ordenar!</button>
-        </div>
+        <Order openHour={openHour} closeHour={closeHour} />
       ) : (
         <div className="order">
           <p>
@@ -147,6 +157,18 @@ const Footer = () => {
     </footer>
   );
 };
+
+function Order({ closeHour, openHour }) {
+  return (
+    <div className="order">
+      <p>
+        Estamos atendiendo desde las {openHour}:00 hasta las {closeHour}:00
+        hrs!.
+      </p>
+      <button className="btn">Ordenar!</button>
+    </div>
+  );
+}
 
 //React v18+
 const root = ReactDOM.createRoot(document.getElementById("root"));
