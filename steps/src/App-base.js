@@ -10,6 +10,7 @@ export default function App() {
   return (
     <div>
       <Steps />
+      <Steps />
     </div>
   );
 }
@@ -45,54 +46,28 @@ function Steps() {
             <div className={`${step >= 2 ? "active" : ""}`}>2</div>
             <div className={`${step >= 3 ? "active" : ""}`}>3</div>
           </div>
-          <StepMessage step={step}>
-            {messages[step - 1]}
-            <Button
-              bgColor="#e7e7e7"
-              color="#333"
-              onClick={() => alert(`Learn how to ${messages[step - 1]}`)}
-            >
-              Aprende como 💡
-            </Button>
-          </StepMessage>
+
+          <p className="message">
+            {" "}
+            Holo!!, paso {step} : {messages[step - 1]}
+          </p>
+
           <div className="buttons">
-            <Button color="#fff" bgColor="#7950f2" onClick={funcion_anterior}>
-              <span>🔙</span> Anterior
-            </Button>
-            <Button
-              color="#fff"
-              bgColor="#7950f2"
-              onClick={funcion_siguiente}
-              text="Siguiente!"
-              emoji="👉"
+            <button
+              style={{ backgroundColor: "#7950f2", color: "#fff" }}
+              onClick={funcion_anterior}
             >
-              {" "}
-              Siguiente <span>👉</span>
-            </Button>
+              Anterior
+            </button>
+            <button
+              style={{ backgroundColor: "#7950f2", color: "#fff" }}
+              onClick={funcion_siguiente}
+            >
+              Siguiente
+            </button>
           </div>
         </div>
       )}
     </div>
-  );
-}
-
-function StepMessage({ step, children }) {
-  return (
-    <div className="message">
-      <h3>Paso {step}</h3>
-      {children}
-    </div>
-  );
-}
-
-function Button({ color, bgColor, onClick, children }) {
-  //Esto es M U Y importante, child props
-  return (
-    <button
-      style={{ backgroundColor: bgColor, color: color }}
-      onClick={onClick}
-    >
-      {children}
-    </button>
   );
 }
