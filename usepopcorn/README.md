@@ -18,3 +18,4 @@ pues me evocaré a hacer proyectos y mini apps divertidas que en un futuro pueda
 
 - (20-03-2024) Creación inicial del proyecto
 - (21-03-2024) Instalación del template a modificar, creación de branch 'feature/UsePopcorn'.
+- (23-03-2024) Separación de componentes grandes a comp. funcionales mas pequeños (pendiente: separarlos en archivos separados, no en la misma app!)
